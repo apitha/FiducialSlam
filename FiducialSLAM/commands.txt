@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------------------------
+The following should be run simultaneously (lines without spaces inbetween should be executed
+sequentially in the same terminal window).
+---------------------------------------------------------------------------------------------
+
+ssh <robot_address>
+bu
+
+ssh <robot_address>
+roslaunch raspicam_node camerav2_1280x960_10fps.launch
+
+rosrun fiducial_slam_2_electric_boogaloo rpicam_tf.py
+
+roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=<file_path>
+
+roslaunch FiducialSLAM fid_slam_all.launch 
+
+roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------
+These commands are used to generate the map for amcl to use while running the above commands,
+and do not need to be run every time.
+---------------------------------------------------------------------------------------------
+
+roslaunch turtlebot3_slam turtlebot3_slam.launch slam_methods:=gmapping
+
+roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
+
+rosrun map_server map_saver -f ~/fid_slam_x
